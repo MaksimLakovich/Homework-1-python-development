@@ -7,6 +7,9 @@ def mask_account_card(data: str) -> str | None:
     1. Visa Platinum 7000 79** **** 6361
     2. Счет **4305"""
 
+    if not isinstance(data, str):
+        raise AttributeError("Некорректный тип данных")
+
     blocks = data.rsplit(" ", 1)
     number = blocks[-1]
 
