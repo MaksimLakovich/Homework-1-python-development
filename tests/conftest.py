@@ -38,5 +38,23 @@ def expected_valid_account():
 
 
 @pytest.fixture
+def valid_name_and_number():
+    return [
+        "Maestro 1596837868705199",
+        "Счет 64686473678894779589",
+        "Visa Classic 6831982476737658",
+    ]
+
+
+@pytest.fixture
+def expected_valid_name_and_number():
+    return [
+        "Maestro 1596 83** **** 5199",
+        "Счет **9589",
+        "Visa Classic 6831 98** **** 7658",
+    ]
+
+
+@pytest.fixture
 def fixture_for_none():
     return None
