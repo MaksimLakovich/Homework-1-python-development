@@ -25,11 +25,14 @@ def mask_account_card(data: str) -> str | None:
         return None
 
 
-def get_date(incoming_date_time: str) -> str:
+def get_date(incoming_date_time: str | None) -> str | None:
     """Функция принимает на вход строку с датой в формате c "2024-03-11T02:26:18.671407"
     и возвращает строку с датой в формате "ДД.ММ.ГГГГ"""
 
-    datetime_format = datetime.strptime(incoming_date_time, "%Y-%m-%dT%H:%M:%S.%f")
-    changed_date_format = datetime_format.strftime("%d-%m-%Y")
+    if incoming_date_time:
+        datetime_format = datetime.strptime(incoming_date_time, "%Y-%m-%dT%H:%M:%S.%f")
+        changed_date_format = datetime_format.strftime("%d-%m-%Y")
 
-    return changed_date_format
+        return changed_date_format
+
+    return None
