@@ -1,6 +1,6 @@
 import pytest
 
-from src.widget import mask_account_card, get_date
+from src.widget import get_date, mask_account_card
 
 
 def test_positive_mask_account_card(valid_name_and_number, expected_valid_name_and_number):
