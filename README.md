@@ -30,7 +30,7 @@
    - Функция`get_date`, которая принимает список словарей и необязательный параметр, задающий порядок сортировки (по умолчанию — убывание). Функция должна возвращать новый список, отсортированный по дате (date).
 
 
-## Установка:
+## Установка проекта:
 1. Клонируйте репозиторий:
 ```
 git clone https://github.com/MaksimLakovich/Homework-python-development
@@ -39,4 +39,33 @@ git clone https://github.com/MaksimLakovich/Homework-python-development
 2. Установите зависимости:
 ```
 poetry install
+```
+
+
+## Модульное тестирование:
+
+1. Тесты подготовлены отдельными файлами под каждый модуль функционала:
+   - _test_modul_masks.py_
+   - _test_modul_widget.py_
+   - _test_modul_processing.py_
+2. Для повышения качества тестирования используются фикстуры (файл: conftest.py) и параметризация тестов.
+
+### Запуск тестирования:
+1. Установить `pytest` в группу dev через Poetry:
+```
+poetry add --group dev pytest
+```
+2. Запустить выполнение тестов:
+```
+pytest -v
+```
+
+### Анализ покрытия кода тестами:
+1. Установить `pytest-cov` в группу dev через Poetry:
+```
+poetry add --group dev pytest-cov
+```
+2. Запустить выполнение тестов:
+```
+pytest --cov=tests
 ```
