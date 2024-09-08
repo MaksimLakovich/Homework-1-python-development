@@ -9,4 +9,4 @@ def sort_by_date(list_transactions: list, sort_parameter=True) -> list:
     """Функция возвращает новый список словарей, отсортированный по дате (date) с помощью
     необязательного параметра, задающего порядок сортировки (по умолчанию — убывание)"""
 
-    return [sorted(list_transactions, key=lambda transaction: transaction["date"], reverse=sort_parameter)]
+    return sorted(list_transactions, key=lambda transaction: transaction["date"], reverse=sort_parameter)
