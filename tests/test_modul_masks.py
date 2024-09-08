@@ -1,7 +1,6 @@
 import pytest
 
-from src.masks import get_mask_card_number,get_mask_account
-from tests.conftest import valid_cards_data, expected_valid_cards_data, fixture_for_none
+from src.masks import get_mask_card_number, get_mask_account
 
 
 def test_positive_mask_card_number(valid_cards_data, expected_valid_cards_data):

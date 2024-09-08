@@ -1,7 +1,6 @@
 import pytest
 
 from src.widget import mask_account_card, get_date
-from tests.conftest import valid_name_and_number, expected_valid_name_and_number, fixture_for_none
 
 
 def test_positive_mask_account_card(valid_name_and_number, expected_valid_name_and_number):

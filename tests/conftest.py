@@ -128,4 +128,3 @@ def sorted_with_reverse_with_same_dates():
         {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:00:00.1'},
         {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
     ]
-
