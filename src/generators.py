@@ -5,7 +5,7 @@ def filter_by_currency(transactions_list: list, money: str) -> Iterator[dict]:
     """Функция принимает список словарей (данные о транзакциях) и возвращает итератор,
     который поочередно выдает транзакции с заданной валютой операции (например, USD)."""
 
-    return (entry for entry in transactions_list if entry["operationAmount"]["currency"]["name"] == money)
+    return (entry for entry in transactions_list if entry["operationAmount"]["currency"]["code"] == money)
 
 
 # # Запуск функции напрямую в модуле для проверки работы
