@@ -8,13 +8,6 @@ def filter_by_currency(transactions_list: list, money: str) -> Iterator[dict]:
     return (entry for entry in transactions_list if entry["operationAmount"]["currency"]["code"] == money)
 
 
-# # Запуск функции напрямую в модуле для проверки работы
-# if __name__ == "__main__":
-#     usd_transactions = filter_by_currency(transactions, "USD")
-#     for entry in range(2):
-#         print(next(usd_transactions))
-
-
 def transaction_descriptions(transactions_list: list) -> Iterator[str]:
     """Генератор принимает список словарей с транзакциями и возвращает описание каждой операции по очереди"""
 
@@ -22,8 +15,14 @@ def transaction_descriptions(transactions_list: list) -> Iterator[str]:
         yield entry["description"]
 
 
-# # Запуск генератора напрямую в модуле для проверки работы
-# if __name__ == "__main__":
-#     descriptions = transaction_descriptions(transactions)
-#     for entry in range(5):
-#         print(next(descriptions))
+def card_number_generator(start: int, finish: int) -> Iterator[str]:
+    """Генератор выдает номера банковских карт в формате XXXX XXXX XXXX XXXX, где X — цифра номера карты.
+    Генератор может сгенерировать номера карт в заданном диапазоне от 0000 0000 0000 0001 до 9999 9999 9999 9999"""
+
+    for num in range(start, finish + 1):
+        # Преобразовываю число в 16-значную строку с ведущими нулями
+        card_number = f"{num:016d}"
+
+        formated_card_number = f"{card_number[:4]} {card_number[4:8]} {card_number[8:12]} {card_number[12:]}"
+
+        yield formated_card_number
