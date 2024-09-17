@@ -19,7 +19,7 @@ def log(filename: Optional[str] = None) -> Callable[[Callable[..., Any]], Callab
                 log_message += f"Функция '{func.__name__}' успешно завершилась в {time_finish}. Результат: {result}\n"
                 if filename:
                     # запись в режиме добавить ('a'), а не перезапись ('w') чтоб сохранять предыдущие логи
-                    with open(filename, "a") as file:
+                    with open(filename, "w") as file:
                         file.write(log_message)
                 else:
                     print(log_message)
@@ -33,7 +33,7 @@ def log(filename: Optional[str] = None) -> Callable[[Callable[..., Any]], Callab
                     f"Входные параметры: {args}, {kwargs}\n"
                 )
                 if filename:
-                    with open(filename, "a") as file:
+                    with open(filename, "w") as file:
                         file.write(log_message)
                 else:
                     print(log_message)
