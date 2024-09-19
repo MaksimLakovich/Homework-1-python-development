@@ -166,3 +166,5 @@ cython_debug/
 pytest.ini
 
 src/main.py
+
+src/mylog_for_task_decorators.txt
