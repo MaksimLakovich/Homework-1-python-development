@@ -46,10 +46,10 @@ def get_transaction_amount(path: str) -> Iterator[Optional[float]]:
                 yield float(transaction["operationAmount"]["amount"])
 
 
-# Пример запуска функции из тек модуля:
-if __name__ == "__main__":
-    PATH_TO_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "operations.json")
-    transaction = get_transaction_amount(PATH_TO_FILE)
-    print(next(transaction))
-    print(next(transaction))
-    print(next(transaction))
+# # Пример запуска функции из тек модуля:
+# if __name__ == "__main__":
+#     PATH_TO_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "operations.json")
+#     transaction = get_transaction_amount(PATH_TO_FILE)
+#     print(next(transaction))
+#     print(next(transaction))
+#     print(next(transaction))
