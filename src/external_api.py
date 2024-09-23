@@ -37,19 +37,19 @@ def get_transaction_amount(path: str) -> Iterator[Optional[float]]:
                     response = requests.request("GET", url, headers=headers, params=payload)
                     response.raise_for_status()  # Поднимаем исключение, если произошла ошибка
                     result = response.json()
-                    yield result["result"]
+                    yield float(result["result"])
                 except requests.exceptions.RequestException as info:
                     print(f"Ошибка при обращении к API: {info}")
                     yield None  # Возвращаем None, если запрос не удался
 
             else:
-                yield transaction["operationAmount"]["amount"]
+                yield float(transaction["operationAmount"]["amount"])
 
 
-# # Пример запуска функции из тек модуля:
-# if __name__ == "__main__":
-#     PATH_TO_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "operations.json")
-#     transaction = get_transaction_amount(PATH_TO_FILE)
-#     print(next(transaction))
-#     print(next(transaction))
-#     print(next(transaction))
+# Пример запуска функции из тек модуля:
+if __name__ == "__main__":
+    PATH_TO_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "operations.json")
+    transaction = get_transaction_amount(PATH_TO_FILE)
+    print(next(transaction))
+    print(next(transaction))
+    print(next(transaction))
