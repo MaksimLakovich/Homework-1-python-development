@@ -339,3 +339,24 @@ def fixture_for_expected_transactions_list():
 @pytest.fixture
 def fixture_for_expected_path_file():
     return os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "operations.json")
+
+
+@pytest.fixture
+def fixture_expected_usd_transaction():
+    return [
+        {
+            "id": 441945886,
+            "state": "EXECUTED",
+            "date": "2019-08-26T10:50:58.294041",
+            "operationAmount": {
+                "amount": "1000.00",
+                "currency": {
+                    "name": "USD",
+                    "code": "USD"
+                }
+            },
+            "description": "Перевод организации",
+            "from": "Maestro 1596837868705199",
+            "to": "Счет 64686473678894779589"
+        },
+    ]
