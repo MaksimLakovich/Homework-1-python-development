@@ -1,13 +1,10 @@
 import os
-from typing import Iterator, Optional
 
 import requests
 from dotenv import load_dotenv
 
-from src.utils import get_transactions
 
-
-def get_transaction_amount(path: str) -> Iterator[Optional[float]]:
+def get_transaction_amount(transaction: dict) -> float | None:
     """Функция принимает на вход транзакцию и возвращает сумму транзакции (amount) в рублях"""
 
     # Загружаем ключ-api из ".env" через dotenv
@@ -16,40 +13,60 @@ def get_transaction_amount(path: str) -> Iterator[Optional[float]]:
     if not api_key:
         raise ValueError("API_KEY не найден в переменных окружения.env")
 
-    # Открываем файл-json с транзакциями через функцию чтения get_transactions() в модуле util.py
-    transactions_list_from_json = get_transactions(path)
+    if "operationAmount" in transaction:
 
-    for transaction in transactions_list_from_json:
-        if "operationAmount" in transaction:
+        # Конвертация валюты при необходимости
+        if transaction["operationAmount"]["currency"]["code"] in ["EUR", "USD"]:
+            url = "https://api.apilayer.com/exchangerates_data/convert"
+            payload = {
+                "amount": transaction["operationAmount"]["amount"],
+                "from": transaction["operationAmount"]["currency"]["code"],
+                "to": "RUB",
+            }
+            headers = {"apikey": api_key}
 
-            # Конвертация валюты при необходимости
-            if transaction["operationAmount"]["currency"]["code"] in ["EUR", "USD"]:
-                url = "https://api.apilayer.com/exchangerates_data/convert"
-                payload = {
-                    "amount": transaction["operationAmount"]["amount"],
-                    "from": transaction["operationAmount"]["currency"]["code"],
-                    "to": "RUB",
-                }
-                headers = {"apikey": api_key}
+            # Получаем результат amount по транзакциям в USD или EUR после конвертации в RUB
+            try:
+                response = requests.request("GET", url, headers=headers, params=payload)
+                response.raise_for_status()  # Поднимаем исключение, если произошла ошибка
+                result = response.json()
+                return float(result["result"])
+            except requests.exceptions.RequestException as info:
+                print(f"Ошибка при обращении к API: {info}")
+                return None  # Возвращаем None, если запрос не удался
 
-                # Получаем результат amount по транзакциям в USD или EUR после конвертации в RUB
-                try:
-                    response = requests.request("GET", url, headers=headers, params=payload)
-                    response.raise_for_status()  # Поднимаем исключение, если произошла ошибка
-                    result = response.json()
-                    yield float(result["result"])
-                except requests.exceptions.RequestException as info:
-                    print(f"Ошибка при обращении к API: {info}")
-                    yield None  # Возвращаем None, если запрос не удался
+        elif transaction["operationAmount"]["currency"]["code"] == "RUB":
+            return float(transaction["operationAmount"]["amount"])
 
-            else:
-                yield float(transaction["operationAmount"]["amount"])
+        else:
+            print("Валюта транзакции не является USD, EUR или RUB")
+            return None  # Возвращаем None, если валюта отличается от USD, EUR или RUB
+
+    else:
+        return None  # Возвращаем None, если в транзакции нет 'operationAmount'
 
 
 # # Пример запуска функции из тек модуля:
 # if __name__ == "__main__":
-#     PATH_TO_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "operations.json")
-#     transaction = get_transaction_amount(PATH_TO_FILE)
-#     print(next(transaction))
-#     print(next(transaction))
-#     print(next(transaction))
+#
+#     transaction = {
+#         "id": 41428829,
+#         "state": "EXECUTED",
+#         "date": "2019-07-03T18:35:29.512364",
+#         "operationAmount":
+#             {
+#                 "amount": "8221.37",
+#                 "currency":
+#                     {
+#                         "name": "EUR",
+#                         "code": "EUR"
+#                     }
+#             },
+#         "description": "Перевод организации",
+#         "from": "MasterCard 7158300734726758",
+#         "to": "Счет 35383033474447895560"
+#     }
+#
+#     result_conversion = get_transaction_amount(transaction)
+#
+#     print(result_conversion)
