@@ -1,4 +1,5 @@
 import pytest
+import os
 
 
 @pytest.fixture
@@ -312,3 +313,85 @@ def expected_card_number_for_generator():
         "0000 0034 9334 1242",
         "0000 0034 9334 1243",
     ]
+
+
+@pytest.fixture
+def fixture_for_expected_transactions_list():
+    return [
+        {
+            "id": 441945886,
+            "state": "EXECUTED",
+            "date": "2019-08-26T10:50:58.294041",
+            "operationAmount": {
+                "amount": "31957.58",
+                "currency": {
+                    "name": "руб.",
+                    "code": "RUB"
+                }
+            },
+            "description": "Перевод организации",
+            "from": "Maestro 1596837868705199",
+            "to": "Счет 64686473678894779589"
+        },
+    ]
+
+
+@pytest.fixture
+def fixture_for_expected_path_file():
+    return os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "operations.json")
+
+
+@pytest.fixture
+def fixture_expected_rub_transaction():
+    return {
+            "id": 441945886,
+            "state": "EXECUTED",
+            "date": "2019-08-26T10:50:58.294041",
+            "operationAmount": {
+                "amount": "1000.00",
+                "currency": {
+                    "name": "RUB",
+                    "code": "RUB"
+                }
+            },
+            "description": "Перевод организации",
+            "from": "Maestro 1596837868705199",
+            "to": "Счет 64686473678894779589"
+        }
+
+
+@pytest.fixture
+def fixture_expected_usd_transaction():
+    return {
+            "id": 441940011,
+            "state": "EXECUTED",
+            "date": "2019-08-26T10:50:58.294041",
+            "operationAmount": {
+                "amount": "964.91",
+                "currency": {
+                    "name": "USD",
+                    "code": "USD"
+                }
+            },
+            "description": "Перевод организации",
+            "from": "Maestro 1596837868705199",
+            "to": "Счет 64686473678894779589"
+        }
+
+@pytest.fixture
+def fixture_expected_uncommon_currency_transaction():
+    return {
+            "id": 441940011,
+            "state": "EXECUTED",
+            "date": "2019-08-26T10:50:58.294041",
+            "operationAmount": {
+                "amount": "1049564.91",
+                "currency": {
+                    "name": "KZH",
+                    "code": "KZH"
+                }
+            },
+            "description": "Перевод организации",
+            "from": "Maestro 1596837868705199",
+            "to": "Счет 64686473678894779589"
+        }
