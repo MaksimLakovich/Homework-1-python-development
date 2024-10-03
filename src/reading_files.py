@@ -61,7 +61,7 @@ def get_transactions_from_csv(file_path: Path, delimiter: str = ";") -> List[Dic
             )
 
         logger_get_transactions_from_csv_and_excel.debug("Завершен процесс считывания и преобразования CSV-файла")
-        return list_transactions_from_csv
+        return result_list_transactions
 
     except FileNotFoundError:
         logger_get_transactions_from_csv_and_excel.error(f"Файл с CSV-данными не найден: {file_path}")
