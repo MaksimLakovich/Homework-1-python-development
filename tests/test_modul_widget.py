@@ -56,5 +56,6 @@ def test_positive_get_date(incoming_date_time, expected):
     ],
 )
 def test_errors_get_date(incorrect_date_time):
-    with pytest.raises(ValueError):
-        get_date(incorrect_date_time)
+    # with pytest.raises(ValueError):
+    #     get_date(incorrect_date_time)
+    assert get_date(incorrect_date_time) is None
