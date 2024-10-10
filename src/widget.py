@@ -30,10 +30,18 @@ def get_date(incoming_date_time: str | None) -> str | None:
     """Функция принимает на вход строку с датой в формате c "2024-03-11T02:26:18.671407"
     и возвращает строку с датой в формате "ДД.ММ.ГГГГ"""
 
-    if incoming_date_time:
+    if incoming_date_time is None:  # Сразу отрабатываю вариант с None или пусто
+        return None
+
+    try:  # Попытка распарсить формат с миллисекундами
         datetime_format = datetime.strptime(incoming_date_time, "%Y-%m-%dT%H:%M:%S.%f")
         changed_date_format = datetime_format.strftime("%d-%m-%Y")
-
         return changed_date_format
+    except ValueError:
+        pass
 
-    return None
+    try:  # Попытка распарсить формат без миллисекунд
+        datetime_format = datetime.strptime(incoming_date_time, "%Y-%m-%dT%H:%M:%SZ")
+        return datetime_format.strftime("%d-%m-%Y")
+    except ValueError:
+        return None
